@@ -6,12 +6,11 @@ from datetime import datetime
 from django.core.mail import send_mail
 
 
-
 db_client = MongoClient('mongodb+srv://super_user:Vrajshah147@cluster0.q7xe6.mongodb.net/Bank?retryWrites=true&w=majority')
 db = db_client['Bank']
 col = db['bank_trans']
 authCol = db['users']
-global_user = ""
+global_user = db['global_user']
 
 
 # # Create your views here.
@@ -22,16 +21,24 @@ def frontpage(request):
     return render(request, 'frontpage.html')
 
 def home(request):
-    query = {"username": global_user}
+    data10 = list(global_user.find().sort('user', -1))
+    logged_in_user = data10[0]['user']
+
+    query = {"username": logged_in_user}
+    # userquery = {"user"}
 
     data = list(authCol.find(query))
     print(data)
     return render(request, 'home.html',  {'data': data})
 
 def table(request):
-    query = {"username": global_user}
+    data = list(global_user.find().sort('user', -1))
+    logged_in_user = data[0]['user']
+
+
+    query = {"username": logged_in_user}
     data = list(col.find(query).sort("date",-1))
-    print(global_user)
+    print(logged_in_user)
     print(data)
     return render(request, 'table.html', {'transactions': data})
 
@@ -41,7 +48,10 @@ def transfer(request):
         a = request.POST['amount']
         amount = float(a)
 
-        query1 = {"username": global_user}
+        data = list(global_user.find().sort('user', -1))
+        logged_in_user = data[0]['user']
+
+        query1 = {"username": logged_in_user}
         data1 = list(col.find(query1).sort("date", -1))
         print("1")
         print(data1)
@@ -75,7 +85,7 @@ def transfer(request):
 
                     new_entry = {
                         "id": new_id,
-                        "username": global_user,
+                        "username": logged_in_user,
                         "deposit": "",
                         "withdraw": amount,
                         "total_amount": new_total_amount,
@@ -130,7 +140,11 @@ def deposit(request):
         amount = float(a)
         #print(type(amount))
 
-        query = {"username": global_user}
+        data10 = list(global_user.find().sort('user', -1))
+        logged_in_user = data10[0]['user']
+
+
+        query = {"username": logged_in_user}
         data = list(col.find(query).sort("date",-1))
 
         data2 = list(col.find().sort("id", -1))
@@ -149,7 +163,7 @@ def deposit(request):
 
         new_entry = {
                      "id": new_id,
-                     "username": global_user,
+                     "username": logged_in_user,
                      "deposit": amount,
                      "withdraw": "",
                      "total_amount": new_total_amount,
@@ -168,7 +182,10 @@ def withdraw(request):
         a = request.POST['amount']
         amount = float(a)
 
-        query = {"username": global_user}
+        data10 = list(global_user.find().sort('user', -1))
+        logged_in_user = data10[0]['user']
+
+        query = {"username": logged_in_user}
         data = list(col.find(query).sort("date",-1))
 
         data2 = list(col.find().sort("id", -1))
@@ -185,7 +202,7 @@ def withdraw(request):
 
                 new_entry = {
                     "id": new_id,
-                    "username": global_user,
+                    "username": logged_in_user,
                     "deposit": "",
                     "withdraw": amount,
                     "total_amount": new_total_amount,
@@ -212,8 +229,14 @@ def login(request):
         query = {"username": username, "password": password}
         data = list(authCol.find(query))
         if (len(data) > 0):
-            global global_user
-            global_user = username
+
+
+            data = list(global_user.find().sort('user',-1))
+            old_global = data[0]['user']
+
+            old_entry = {'user': old_global}
+            new_entry = { "$set": {'user': username}}
+            global_user.update_one(old_entry, new_entry)
             return redirect('home')
         else:
             messages.info(request, "Incorrect Credentials")
@@ -256,7 +279,10 @@ def logout(request):
 
 
 def email():
-    query = {"username": global_user}
+    data10 = list(global_user.find().sort('user', -1))
+    logged_in_user = data10[0]['user']
+
+    query = {"username": logged_in_user}
     data = list(authCol.find(query))
     email = data[0]["email"]
 
