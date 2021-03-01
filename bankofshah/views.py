@@ -130,6 +130,7 @@ def transfer(request):
             return redirect('transfer')
 
     else:
+        messages.info(request, "Notice will be sent to email")
         return render(request, "transfer.html")
 
 
@@ -175,6 +176,7 @@ def deposit(request):
         return redirect('table')
 
     else:
+        messages.info(request, "Notice will be sent to email")
         return render(request, 'deposit.html')
 
 def withdraw(request):
@@ -219,6 +221,7 @@ def withdraw(request):
             return redirect('withdraw')
 
     else:
+        messages.info(request, "Notice will be sent to email")
         return render(request, 'withdraw.html')
 
 def login(request):
