@@ -1,0 +1,49 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+    <ul class="nav justify-content-center nav-pills navbar-dark bg-dark" style="height: 100%">
+
+  <li class="nav-item">
+    <a class="nav-link" href="table">History</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="deposit">Deposit</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="withdraw">Withdraw</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link active" href="transfer">Transfer</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link"  href="contact">Contact Us</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link" href="logout">Logout</a>
+  </li>
+</ul>
+
+<br>
+
+    <h1 align="center">Transfer</h1>
+
+    <form action="transfer" method="post">
+     {% csrf_token %}
+        <div class="container" align="center">
+        <p>Enter the user you wish to send money to!</p>
+        <input type="text" name="receiver" class="form-control" placeholder="Bob"><br>
+        <input type="number" name="amount" placeholder="1000" class="form-control"><br>
+        <input type="submit" class="btn btn-primary" >
+        </div>
+    </form>
+
+    <br>
+    <br>
+    <div align="center">
+        {% for messages in messages %}
+        <h3> {{ messages }}</h3>
+        {% endfor %}
+    </div>
+
+{% endblock %}

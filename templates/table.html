@@ -1,0 +1,69 @@
+{% extends "home.html" %}
+
+{% block content %}
+    <ul class="nav justify-content-center nav-pills navbar-dark bg-dark" style="height: 100%">
+
+  <li class="nav-item">
+    <a class="nav-link active" href="table">History</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="deposit">Deposit</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="withdraw">Withdraw</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link" href="transfer">Transfer</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link"  href="contact">Contact Us</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link" href="logout">Logout</a>
+  </li>
+</ul>
+
+<br>
+
+
+
+    <h1 align="center">History</h1>
+
+    <h3 align="center">
+    {% for transaction in transactions %}
+        {% if forloop.counter < 2 %}
+            Total amount: ${{ transaction.total_amount }}
+        {% else %}
+
+        {% endif %}
+    {% endfor %}
+    </h3>
+
+    <div class="container" align="center">
+        <table class="table">
+        <thead class="thead-light">
+        <tr align="center">
+            <th>Date</th>
+            <th>Deposit</th>
+            <th>Withdraw</th>
+            <th>Total Amount</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for transaction in transactions %}
+        <tr align="center">
+            <td>{{ transaction.date }}</td>
+            <td>{{ transaction.deposit }}</td>
+            <td>{{ transaction.withdraw }}</td>
+            <td>{{ transaction.total_amount }}</td>
+
+            {% endfor %}
+        </tr>
+        </tbody>
+
+        </table>
+    </div>
+
+{% endblock %}

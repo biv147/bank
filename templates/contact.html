@@ -1,0 +1,64 @@
+{% extends "home.html" %}
+
+{% block content %}
+
+    <ul class="nav justify-content-center nav-pills navbar-dark bg-dark" style="height: 100%">
+
+  <li class="nav-item">
+    <a class="nav-link" href="table">History</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="deposit">Deposit</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="withdraw">Withdraw</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link" href="transfer">Transfer</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link active" href="contact">Contact Us</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link" href="logout">Logout</a>
+  </li>
+</ul>
+
+
+    <div class="container" align="center">
+    <br><br>
+        <div class="jumbotron" align="center">
+          <h1 class="display-4">Contact Us</h1>
+            <br>
+            <p>Phone Number</p>
+          <p class="lead">647-852-9631</p>
+            <p>Email</p>
+          <p class="lead">bankofshah@gmail.com</p>
+            <p>Address</p>
+          <p class="lead">2000 Simcoe Street North <br> Oshawa, Ontario, L1G 0C5</p>
+
+          </p>
+        </div>
+
+
+        <div id="map" style="width:100%;height:500px;">
+            <script>
+                function initMap() {
+                    var location = {lat: 43.945429, lng: -78.895695};
+
+                    var map = new google.maps.Map(document.getElementById("map"), {
+                        zoom: 15,
+                        center: location
+                    });
+
+                    var marker = new google.maps.Marker({
+                        position: location,
+                        map: map
+                    });
+                }
+            </script>
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2_aCGfpoFUvFLVZKKBu0fAcWrh-ichv0&callback=initMap" /><br/></script>
+        </div>
+    </div>
+
+{% endblock %}

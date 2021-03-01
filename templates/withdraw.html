@@ -1,0 +1,51 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+    <ul class="nav justify-content-center nav-pills navbar-dark bg-dark" style="height: 100%">
+
+  <li class="nav-item">
+    <a class="nav-link" href="table">History</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="deposit">Deposit</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="withdraw">Withdraw</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link" href="transfer">Transfer</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link"  href="contact">Contact Us</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link" href="logout">Logout</a>
+  </li>
+</ul>
+
+<br>
+
+    <h1 align="center">Withdraw</h1>
+
+    <br>
+    <br>
+
+    <form action="withdraw" method="post">
+    <div class="container" align="center">
+     {% csrf_token %}
+        <label for="amount">Enter Amount:</label>
+        <input type="number" name="amount" id="amount" placeholder="1000" class="form-control"><br>
+        <input type="submit" class="btn btn-primary" >
+    </div>
+    </form>
+
+    <br>
+    <br>
+    <div align="center">
+        {% for messages in messages %}
+        <h3> {{ messages }}</h3>
+        {% endfor %}
+    </div>
+
+{% endblock %}
