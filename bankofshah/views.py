@@ -226,10 +226,12 @@ def login(request):
         username = request.POST['user']
         password = request.POST['pass']
 
+        print("got the user and pass")
+
         query = {"username": username, "password": password}
         data = list(authCol.find(query))
         if (len(data) > 0):
-
+            print("verified user!")
 
             data = list(global_user.find().sort('user',-1))
             old_global = data[0]['user']
@@ -237,6 +239,9 @@ def login(request):
             old_entry = {'user': old_global}
             new_entry = { "$set": {'user': username}}
             global_user.update_one(old_entry, new_entry)
+
+            print("updated the db for global user")
+
             return redirect('home')
         else:
             messages.info(request, "Incorrect Credentials")
