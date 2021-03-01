@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import django_heroku
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -23,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '#^vy-p*fs&3n4p9#z@al%*51$30ske$a=@=u=tr^pu!r@c9d@8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['shahbank.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -124,3 +126,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'bankofshah@gmail.com'
 EMAIL_HOST_PASSWORD = '+kr4mmwwwyqya'
 EMAIL_USE_TLS = True
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
